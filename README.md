@@ -4,7 +4,12 @@ Bioviz 2022 visualization challenge entry.
 This repository implements an interactive visualization
 intended to address the requirements of the
 <a href="http://biovis.net/2022/biovisChallenges_vis/">
-Bio+MedVis Challenge @ IEEE VIS 2022: Taming protein beasts through visualization (http://biovis.net/2022/biovisChallenges_vis/).
+Bio+MedVis Challenge @ IEEE VIS 2022: Taming protein beasts through visualization 
+(http://biovis.net/2022/biovisChallenges_vis/).
+</a>
+
+<a href="https://aaronwatters.github.io/bioviz2022/challenge.html">
+Go to the challenge entry web page interface.
 </a>
 
 # Credits
