@@ -1,7 +1,16 @@
 
+/*
+todo: start/stop rotation.
+obey radio buttons
+proximity slider
+assembly annotation
+special treatment for pathogenic
+*/
+
+
 var info, detail, current_protein, json_data;
 var DATA_FILE = "./challenge.json";
-var WIDTH = 1000;
+var WIDTH = 800;
 var select, detail, checkboxes;
 
 function setup() {
@@ -27,7 +36,7 @@ var process_json = function(data) {
     $("<span>Protein: </span>").appendTo(selector);
     select = $('<select id="protein_selection"/>').appendTo(selector);
     for (var name in data) {
-        var option = $(`<option value="${name}">${name}</option>`).appendTo(select);
+        $(`<option value="${name}">${name}</option>`).appendTo(select);
         p += name + "; ";
         if (!current_protein) {
             current_protein = data[name]
@@ -41,12 +50,22 @@ var process_json = function(data) {
 };
 
 var other_classification = "(other)"
+var hover_key = null;
+var focus_key = null;
 
 var draw_selection = function() {
     debugger;
     var name = select.val();
+    hover_key = null;
+    focus_key = null;
     current_protein = json_data[name];
     detail.empty();
+    var main_col = $("<div/>").appendTo(detail);
+    main_col.css({"display": "flex", "flex-direction": "column"});
+    var category_row = $("<div/>").appendTo(main_col);
+    category_row.css({"display": "flex", "flex-direction": "row", "justify-content": "space-evenly"});
+    var cb_column = $("<div/>").appendTo(category_row);
+    cb_column.css({"display": "flex", "flex-direction": "column"});
     checkboxes = [];
     var classifications = current_protein.classifications;
     for (var i=0; i<classifications.length; i++) {
@@ -54,11 +73,39 @@ var draw_selection = function() {
         if (classification.length < 1) {
             classification = other_classification;
         }
-        var cbdiv = $("<div/>").appendTo(detail);
+        var cbdiv = $("<div/>").appendTo(cb_column);
         var cb = $(`<input type="checkbox" value="${classification}" checked/>`).appendTo(cbdiv);
         $(`<span> ${classification} </span>`).appendTo(cbdiv);
         checkboxes.push(cb);
     }
+    var resnum = 0;
+    var reskeys = Object.keys(Amino_acids).sort();
+    for (var i=0; i<4; i++) {
+        var res_column = $("<div/>").appendTo(category_row);
+        res_column.css({"display": "flex", "flex-direction": "column"});
+        for (var j=0; j<5; j++) {
+            var reskey = reskeys[resnum]
+            var res = Amino_acids[reskey];
+            var res_row = $(`<\div>`).appendTo(res_column);
+            res_row.css({"display": "flex", "flex-direction": "row", "align-items": "flex-end"});
+            var swatch = $("<div> &nbsp; </div>").appendTo(res_row);
+            swatch.width(20);
+            var [R,G,B] = res.color;
+            var color = "rgb(" + R + "," + G + "," + B + ")";
+            swatch.css({"background-color": color})
+            $(`<div> &nbsp; ${res.name}  </div>'`).appendTo(res_row);
+            resnum ++;
+        }
+    }
+    var target_row =  $("<div/>").appendTo(main_col);
+    target_row.css({"display": "flex", "flex-direction": "row"});
+    target = $("<div/>").appendTo(target_row);
+    var target_col = $("<div/>").appendTo(target_row);
+    target_col.css({"display": "flex", "flex-direction": "column", "justify-content": "space-around"});
+    //$("<h4>Focus</h4>").appendTo(target_col);
+    focus_target =  $("<div>Focus info here</div>").appendTo(target_col);
+    //$("<h4>Hover</h4>").appendTo(target_col);
+    hover_target =  $("<div>Hover over a circle for annotation detail.</div>").appendTo(target_col);
     prepare_canvas();
     draw_protein();
     //nd_frame.fit(0.8)
@@ -67,10 +114,10 @@ var draw_selection = function() {
     nd_frame.rotate_shift(current_protein.center, current_protein.radius, [5,0]);
 };
 
-var target, frame, nd_frame;
+var target, frame, nd_frame, focus_target, hover_target;
 
 var prepare_canvas = function() {
-    target = $("<div/>").appendTo(detail);
+    //target = $("<div/>").appendTo(detail);
     var canvas_config = {
         width: WIDTH,
         height: WIDTH,
@@ -135,17 +182,71 @@ var draw_protein = function() {
                 color:semi_transparent,
                 name: "residue_" + rname,
             });
-            rcircle.on("mouseover", rcircle_mouseover)
+            rcircle.on("mouseover", rcircle_mouseover);
+            rcircle.on("click", rcircle_click);
+            if (!focus_key) {
+                focus_key = rname;
+            }
         }
     }
+    focus_circle = null;
+    hover_circle = null;
+    show_focus();
+};
+
+var focus_circle = null;
+var hover_circle = null;
+
+var show_focus = function () {
+    focus_circle = show_focus_detail("Focus", focus_key, focus_circle, "red", focus_target);
+    hover_circle = show_focus_detail("Hover", hover_key, hover_circle, "magenta", hover_target);
+};
+
+var show_focus_detail = function(action, r_key, r_circle, r_color, r_target) {
+    var r_radius = 25;
+    if (r_key) {
+        var r = current_protein.residues[r_key];
+        if (!r_circle) {
+            r_circle = nd_frame.circle({
+                location:r.C.pos, 
+                r: r_radius,
+                color:r_color,
+                name: r_color + "_focus_circle",
+                fill:false,
+                events:false,
+                lineWidth:8,
+            });
+        } else {
+            r_circle.change({location:r.C.pos});
+        }
+        r_target.empty()
+        $(`<h4> ${action}: ${r_key} </h4>`).appendTo(r_target);
+        var annotations = r.annotations;
+        for (var i=0; i<annotations.length; i++) {
+            var ann = annotations[i];
+            $(`<div> ${ann.classification} : ${ann.MOD} </div>`).appendTo(r_target);
+        }
+    }
+    return r_circle;
 };
 
 var rcircle_mouseover = function(event) {
-    debugger;
+    //debugger;
     var circle_name = event.canvas_name;
     var residue_name = circle_name.split("_")[1]
-    info.html("Hover over residue: " + residue_name)
-}
+    info.html("Hover over residue: " + residue_name);
+    hover_key = residue_name;
+    show_focus();
+};
+
+var rcircle_click = function(event) {
+    //debugger;
+    var circle_name = event.canvas_name;
+    var residue_name = circle_name.split("_")[1]
+    info.html("Click residue: " + residue_name);
+    focus_key = residue_name;
+    show_focus();
+};
 
 Amino_acids = {
 'A': {'name': 'Alanine',

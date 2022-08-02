@@ -693,7 +693,7 @@ Structure follows: https://learn.jquery.com/plugins/basic-plugin-creation/
                 var nd_frame = this.nd_frame;
                 var scale = elapsed / 1000.0;
                 var shift = nd_frame.model_transform.vscale(scale, this.shift2dPerSecond);
-                console.log("shift="+shift.x+","+shift.y);
+                //console.log("shift="+shift.x+","+shift.y);
                 this.nd_frame.orbit(this.center3d, this.radius, shift);
             };
             go() {
