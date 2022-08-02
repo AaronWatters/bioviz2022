@@ -21,3 +21,8 @@ Amino acid residue colors were borrowed from
 <a href="http://acces.ens-lyon.fr/biotic/rastop/help/colour.htm">
 http://acces.ens-lyon.fr/biotic/rastop/help/colour.htm</a> and modified
 for better visibility.
+
+Amino acid abbreviations were taken from
+<a href="https://i-base.info/ttfa/hiv-and-drug-resistance/appendix-3-list-of-amino-acids-and-their-abbreviations/">
+https://i-base.info/ttfa/hiv-and-drug-resistance/appendix-3-list-of-amino-acids-and-their-abbreviations/</a>.
+
