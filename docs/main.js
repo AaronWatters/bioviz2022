@@ -5,6 +5,7 @@ obey radio buttons
 proximity slider
 assembly annotation
 special treatment for pathogenic
+exxplanatory text on interface page.
 */
 
 
@@ -109,9 +110,9 @@ var draw_selection = function() {
     prepare_canvas();
     draw_protein();
     //nd_frame.fit(0.8)
-    nd_frame.orbit_all(current_protein.radius, current_protein.center);
-    debugger;
-    nd_frame.rotate_shift(current_protein.center, current_protein.radius, [5,0]);
+    //nd_frame.orbit_all(current_protein.radius, current_protein.center);
+    //debugger;
+    //nd_frame.rotate_shift(current_protein.center, current_protein.radius, [5,0]);
 };
 
 var target, frame, nd_frame, focus_target, hover_target;
@@ -134,6 +135,7 @@ var prepare_canvas = function() {
 };
 
 var draw_protein = function() {
+    nd_frame.reset();
     annotation_radius = 10;
     var locations = current_protein.locations;
     //var transparent = "rgba(0,0,0,0)";
@@ -192,13 +194,17 @@ var draw_protein = function() {
     focus_circle = null;
     hover_circle = null;
     show_focus();
+    nd_frame.fit(0.8)
+    nd_frame.orbit_all(current_protein.radius, current_protein.center);
+    //debugger;
+    nd_frame.rotate_shift(current_protein.center, current_protein.radius, [5,0]);
 };
 
 var focus_circle = null;
 var hover_circle = null;
 
 var show_focus = function () {
-    focus_circle = show_focus_detail("Focus", focus_key, focus_circle, "red", focus_target);
+    focus_circle = show_focus_detail("Click", focus_key, focus_circle, "red", focus_target);
     hover_circle = show_focus_detail("Hover", hover_key, hover_circle, "magenta", hover_target);
 };
 
@@ -222,7 +228,7 @@ var show_focus_detail = function(action, r_key, r_circle, r_color, r_target) {
         r_target.empty()
         var RES = r.RES;
         var r_name = Amino_acids[RES].name;
-        $(`<h4> ${action}: ${r_key} : ${RES} : ${r_name} </h4>`).appendTo(r_target);
+        $(`<h4> <em style="color:${r_color}">${action}:</em> ${r_key} : ${RES} : ${r_name} </h4>`).appendTo(r_target);
         var annotations = r.annotations;
         for (var i=0; i<annotations.length; i++) {
             var ann = annotations[i];
