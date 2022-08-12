@@ -30,7 +30,7 @@ body {
   background: rgb(255, 255, 255);
   font-size: 1.6rem;
   color: var(--off-black);
-  margin: 0;
+  margin: 10px;
 }
 
 /* Typography

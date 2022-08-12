@@ -1,10 +1,10 @@
 
 /*
-todo: start/stop rotation.
+todo:
 proximity slider
 assembly annotation
 special treatment for pathogenic
-exxplanatory text on interface page.
+explanatory text on interface page.
 */
 
 
