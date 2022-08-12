@@ -11,7 +11,7 @@ exxplanatory text on interface page.
 var info, detail, current_protein, json_data;
 var DATA_FILE = "./challenge.json";
 var WIDTH = 800;
-var select, detail, checkboxes;
+var select, detail, checkboxes, rotate_checkbox;
 
 function setup() {
     info = $('#info');
@@ -45,6 +45,10 @@ var process_json = function(data) {
     select.selectmenu();
     select.on('selectmenuchange', draw_selection);
     //$("#protein_selection").on('selectmenuchange', draw_selection);
+    var rotatediv = $("<div/>").appendTo(selector);
+    rotate_checkbox = $(`<input type="checkbox" value="rotate" checked/>`).appendTo(rotatediv);
+    rotate_checkbox.change(draw_protein);
+    $(`<span> auto-rotate </span>`).appendTo(rotatediv);
     info.html(p);
     draw_selection();
 };
@@ -217,7 +221,11 @@ var draw_protein = function() {
     nd_frame.fit(0.8)
     nd_frame.orbit_all(current_protein.radius, current_protein.center);
     //debugger;
-    nd_frame.rotate_shift(current_protein.center, current_protein.radius, [5,0]);
+    if (rotate_checkbox.is(":checked")) {
+        nd_frame.rotate_shift(current_protein.center, current_protein.radius, [5,0]);
+    } else {
+        nd_frame.rotation_off();
+    }
 };
 
 var focus_circle = null;
