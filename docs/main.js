@@ -67,7 +67,7 @@ var draw_selection = function() {
     category_row.css({"display": "flex", "flex-direction": "row", "justify-content": "space-evenly"});
     var cb_column = $("<div/>").appendTo(category_row);
     cb_column.css({"display": "flex", "flex-direction": "column"});
-    checkboxes = [];
+    checkboxes = {};
     var classifications = current_protein.classifications;
     for (var i=0; i<classifications.length; i++) {
         var classification = classifications[i].trim();
@@ -77,7 +77,8 @@ var draw_selection = function() {
         var cbdiv = $("<div/>").appendTo(cb_column);
         var cb = $(`<input type="checkbox" value="${classification}" checked/>`).appendTo(cbdiv);
         $(`<span> ${classification} </span>`).appendTo(cbdiv);
-        checkboxes.push(cb);
+        checkboxes[classification] = cb;
+        cb.change(draw_protein);
     }
     var resnum = 0;
     var reskeys = Object.keys(Amino_acids).sort();
@@ -134,9 +135,18 @@ var prepare_canvas = function() {
     });
 };
 
+var classifications;
+
 var draw_protein = function() {
     nd_frame.reset();
     annotation_radius = 10;
+    // determine active classifications
+    // https://stackoverflow.com/questions/2834350/get-checkbox-value-in-jquery
+    classifications = {};
+    for (var classification in checkboxes) {
+        var cb = checkboxes[classification];
+        classifications[classification] = cb.is(":checked");
+    }
     var locations = current_protein.locations;
     //var transparent = "rgba(0,0,0,0)";
     nd_frame.polygon({
@@ -169,7 +179,15 @@ var draw_protein = function() {
         }
         var annotations = r.annotations;
         var n_ann = annotations.length;
-        if (n_ann > 0) {
+        var r_selected = false;
+        for (var i=0; i<n_ann; i++) {
+            var anni = annotations[i];
+            var cls = anni.classification;
+            if (classifications[cls]) {
+                r_selected = true;
+            }
+        }
+        if (r_selected) {
             // add an annotation marker
             nd_frame.circle({
                 location:r.C.pos, 
