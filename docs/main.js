@@ -1,7 +1,6 @@
 
 /*
 todo: start/stop rotation.
-obey radio buttons
 proximity slider
 assembly annotation
 special treatment for pathogenic
@@ -183,6 +182,9 @@ var draw_protein = function() {
         for (var i=0; i<n_ann; i++) {
             var anni = annotations[i];
             var cls = anni.classification;
+            if (cls.length < 1) {
+                cls = other_classification;
+            }
             if (classifications[cls]) {
                 r_selected = true;
             }
