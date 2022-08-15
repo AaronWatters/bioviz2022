@@ -5,13 +5,14 @@ proximity slider
 assembly annotation
 special treatment for pathogenic
 explanatory text on interface page.
+pseudo perspective?
 */
 
 
 var info, detail, current_protein, json_data;
 var DATA_FILE = "./challenge.json";
 var WIDTH = 800;
-var select, detail, checkboxes, rotate_checkbox;
+var select, detail, checkboxes, rotate_checkbox, pathogenic_checkbox, is_pathogenic;
 
 function setup() {
     info = $('#info');
@@ -70,6 +71,14 @@ var draw_selection = function() {
     category_row.css({"display": "flex", "flex-direction": "row", "justify-content": "space-evenly"});
     var cb_column = $("<div/>").appendTo(category_row);
     cb_column.css({"display": "flex", "flex-direction": "column"});
+    is_pathogenic = current_protein.pathogenic;
+    pathogenic_checkbox = null;
+    if (is_pathogenic) {
+        var cbdiv = $("<div/>").appendTo(cb_column);
+        $(`<span> pathogenic only </span>`).appendTo(cbdiv);
+        pathogenic_checkbox = $(`<input type="checkbox" value="pathogenic"/>`).appendTo(cbdiv);
+        pathogenic_checkbox.change(draw_protein);
+    }
     checkboxes = {};
     var classifications = current_protein.classifications;
     for (var i=0; i<classifications.length; i++) {
@@ -191,6 +200,12 @@ var draw_protein = function() {
             }
             if (classifications[cls]) {
                 r_selected = true;
+            }
+        }
+        // check for pathogenic only
+        if ((r_selected) && (is_pathogenic)) {
+            if (pathogenic_checkbox.is(":checked")) {
+                r_selected = r.pathogenic;
             }
         }
         if (r_selected) {
