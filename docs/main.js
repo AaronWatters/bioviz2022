@@ -272,6 +272,9 @@ var show_focus_detail = function(action, r_key, r_circle, r_color, r_target) {
         var RES = r.RES;
         var r_name = Amino_acids[RES].name;
         $(`<h4> <em style="color:${r_color}">${action}:</em> ${r_key} : ${RES} : ${r_name} </h4>`).appendTo(r_target);
+        if (r.pathogenic) {
+            $(`<h4 style="color:red">PATHOGENIC</h4>`).appendTo(r_target);
+        }
         var annotations = r.annotations;
         for (var i=0; i<annotations.length; i++) {
             var ann = annotations[i];
