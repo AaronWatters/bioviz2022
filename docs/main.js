@@ -50,6 +50,8 @@ var process_json = function(data) {
     rotate_checkbox = $(`<input type="checkbox" value="rotate" checked/>`).appendTo(rotatediv);
     rotate_checkbox.change(draw_protein);
     $(`<span> auto-rotate </span>`).appendTo(rotatediv);
+    var fit_button = $("<button>FIT</button>").appendTo(rotatediv);
+    fit_button.click(draw_protein);
     info.html(p);
     draw_selection();
 };
@@ -57,6 +59,8 @@ var process_json = function(data) {
 var other_classification = "(other)"
 var hover_key = null;
 var focus_key = null;
+var focus_radius = null;
+var radius_slider = null;
 
 var draw_selection = function() {
     debugger;
@@ -72,6 +76,7 @@ var draw_selection = function() {
     var cb_column = $("<div/>").appendTo(category_row);
     cb_column.css({"display": "flex", "flex-direction": "column"});
     is_pathogenic = current_protein.pathogenic;
+    // optional pathogenic checkbox.
     pathogenic_checkbox = null;
     if (is_pathogenic) {
         var cbdiv = $("<div/>").appendTo(cb_column);
@@ -79,6 +84,7 @@ var draw_selection = function() {
         pathogenic_checkbox = $(`<input type="checkbox" value="pathogenic"/>`).appendTo(cbdiv);
         pathogenic_checkbox.change(draw_protein);
     }
+    // classification checkboxes
     checkboxes = {};
     var classifications = current_protein.classifications;
     for (var i=0; i<classifications.length; i++) {
@@ -92,6 +98,7 @@ var draw_selection = function() {
         checkboxes[classification] = cb;
         cb.change(draw_protein);
     }
+    // amino acid color table
     var resnum = 0;
     var reskeys = Object.keys(Amino_acids).sort();
     for (var i=0; i<4; i++) {
@@ -111,6 +118,27 @@ var draw_selection = function() {
             resnum ++;
         }
     }
+    // focus radius slider
+    var slider_row =  $("<div/>").appendTo(main_col);
+    slider_row.css({
+        "display": "flex", 
+        "flex-direction": "row", 
+        "justify-content": "flex-start",
+        "background-color": "#ffd",
+    });
+    $("<div>Radius: </div>").appendTo(slider_row);
+    radius_slider = $("<div/>").appendTo(slider_row);
+    radius_slider.width(400)
+    focus_radius = Math.ceil(current_protein.radius);
+    radius_slider.slider({
+        max: focus_radius,
+        min: 1,
+        step: 1,
+        value: focus_radius,
+        slide: draw_protein,
+    });
+
+    // protein drawing and focus detail panel
     var target_row =  $("<div/>").appendTo(main_col);
     target_row.css({"display": "flex", "flex-direction": "row"});
     target = $("<div/>").appendTo(target_row);
@@ -148,6 +176,7 @@ var prepare_canvas = function() {
 };
 
 var classifications;
+var focus_center;
 
 var draw_protein = function() {
     nd_frame.reset();
@@ -159,6 +188,12 @@ var draw_protein = function() {
         var cb = checkboxes[classification];
         classifications[classification] = cb.is(":checked");
     }
+    focus_center = null;
+    if (focus_key) {
+        var focus_residue = current_protein.residues[focus_key];
+        focus_center = focus_residue.C.pos;
+    }
+    focus_radius = radius_slider.slider("option", "value");
     var locations = current_protein.locations;
     //var transparent = "rgba(0,0,0,0)";
     nd_frame.polygon({
@@ -169,6 +204,18 @@ var draw_protein = function() {
     var residues = current_protein.residues;
     for (var rname in residues) {
         var r = residues[rname];
+        if (focus_center) {
+            var cPos = r.C.pos;
+            // skip if out of radius range
+            var total = 0;
+            for (var i=0; i<3; i++) {
+                total += (cPos[i] - focus_center[i]) ** 2;
+            }
+            var dist = Math.sqrt(total);
+            if (dist > focus_radius) {
+                continue;
+            }
+        }
         var res = r.RES;
         var acid = Amino_acids[res];
         var [R,G,B] = acid.color;
