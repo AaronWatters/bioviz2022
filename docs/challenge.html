@@ -11,6 +11,42 @@
 
   <body>
 
+    <h2>Taming protein beasts through visualization</h2>
+
+    <p>This repository implements an interactive visualization
+        intended to address the requirements of the
+        <a href="http://biovis.net/2022/biovisChallenges_vis/">
+        Bio+MedVis Challenge @ IEEE VIS 2022: Taming protein beasts through visualization 
+        (http://biovis.net/2022/biovisChallenges_vis/).
+        </a>
+    </p>
+
+    <p>
+        The visualization displays a protein structure with colored residues.
+        Some of the residues of the structure are annotated.  Annotated residues for selected annotations
+        are marked by a circle.
+    </p>
+
+    <p>
+        Hovering or clicking an annotated residue displays detail about the residue annotation
+        in the right panel.
+    </p>
+
+    <p>
+        Interactions:
+
+        <ul>
+            <li>Turn autorotation on or off using the checkbox.</li>
+            <li>Rotate the figure by dragging over the  display area.</li>
+            <li>Inspect an annotated residue by hovering over the circle marker for the residue.</li>
+            <li>Focus on a residue by clicking the circle marker for the residue.</li>
+            <li>Examine proximal structure to the focus by adjusting the radius slider.</li>
+            <li>Select annotation types of interest using the annotation checkboxes.</li>
+            <li>Fit the figure to the view port using the fit button.</li>
+            <li>Use the pathogenic checkbox (if present) to show only pathogenic annotations.</li>
+        </ul>
+    </p>
+
     <p class="info-text" id="info">Page not initialized.</p>
 
     <div class="protein_select" id="protein_select"></div>
@@ -26,5 +62,11 @@
   <script>
     setup();
   </script>
+
+  <p>
+    <a href="https://github.com/AaronWatters/bioviz2022">
+        Return to repository: https://github.com/AaronWatters/bioviz2022.
+    </a>
+  </p>
 </body>
 </html>
