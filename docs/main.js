@@ -88,13 +88,13 @@ var draw_selection = function() {
     checkboxes = {};
     var classifications = current_protein.classifications;
     for (var i=0; i<classifications.length; i++) {
-        var classification = classifications[i].trim();
+        var [classification, count] = classifications[i];
         if (classification.length < 1) {
             classification = other_classification;
         }
         var cbdiv = $("<div/>").appendTo(cb_column);
         var cb = $(`<input type="checkbox" value="${classification}" checked/>`).appendTo(cbdiv);
-        $(`<span> ${classification} </span>`).appendTo(cbdiv);
+        $(`<span> ${classification} : ${count} </span>`).appendTo(cbdiv);
         checkboxes[classification] = cb;
         cb.change(draw_protein);
     }
@@ -225,7 +225,7 @@ var draw_protein = function() {
             locations: [r.C.pos, r.N.pos, r.CA.pos],
             color: color,
             fill: false,
-            lineWidth: 2,
+            lineWidth: 4,
         });
         if (r.CB) {
             nd_frame.polygon({
@@ -233,7 +233,7 @@ var draw_protein = function() {
                 close: false,
                 fill: false,
                 color: color,
-                lineWidth: 3,
+                lineWidth: 4,
             });
         }
         var annotations = r.annotations;

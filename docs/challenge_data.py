@@ -79,7 +79,7 @@ class Protein:
         self.gene = None
         self.species = None
         self.entry = None
-        self.classifications = set()
+        self.classifications = {}
         self.pathogenic = False
         self.locations = []
 
@@ -100,7 +100,7 @@ class Protein:
             radius=float(radius),
             locations=self.locations,
             )
-        result["classifications"] = sorted(self.classifications)
+        result["classifications"] = sorted([[c,n] for (c,n) in self.classifications.items()])
         p2r = self.position_to_residue
         result["residues"] = {p: p2r[p].json_object() for p in sorted(p2r.keys())}
         return result
@@ -117,14 +117,17 @@ class Protein:
             assert self.gene == ann.Gene
             assert self.species == ann.Species
             assert self.entry == ann.Entry
-        self.classifications.add(ann.classification)
+        #self.classifications.add(ann.classification)
+        clss = self.classifications
+        cls = ann.classification
+        clss[cls] = clss.get(cls, 0) + 1
         if ann.PathogenicMutation:
             self.pathogenic = True
 
     def dump(self):
         print()
         print("Protein: ", self.name, self.gene, self.species, self.entry)
-        print("   ", sorted(self.classifications))
+        print("   ", sorted(self.classifications.items()))
         p2r = self.position_to_residue
         for p in sorted(p2r.keys()):
             r = p2r[p]
@@ -158,8 +161,12 @@ class Residue:
         if CB.valid:
             self.CB = CB
         self.annotations = []
-        self.classifications = set()
+        self.classifications = {}
         self.PathogenicMutation = False
+
+    def add_classification(self, cls):
+        clss = self.classifications
+        clss[cls] = clss.get(cls, 0) + 1
 
     def location(self):
         return self.C.location()
@@ -186,10 +193,10 @@ class Residue:
         self.annotations.append(ann)
         if ann.PathogenicMutation:
             self.PathogenicMutation = True
-        self.classifications.add(ann.classification)
+        self.add_classification(ann.classification)
 
     def dump(self, indent="   "):
-        print(indent, "RESIDUE", self.POS, self.RES, self.quality, sorted(self.classifications))
+        print(indent, "RESIDUE", self.POS, self.RES, self.quality, sorted(self.classifications.items()))
         if self.PathogenicMutation:
             print(indent, "  PathogenicMutation")
         print(indent, "       ", self.C, self.CA, self.N, self.CB)

@@ -1964,11 +1964,26 @@
       ]
     ],
     "classifications": [
-      "Artefact",
-      "Chemical derivative",
-      "Multiple",
-      "Post-translational",
-      "Pre-translational"
+      [
+        "Artefact",
+        41
+      ],
+      [
+        "Chemical derivative",
+        34
+      ],
+      [
+        "Multiple",
+        4
+      ],
+      [
+        "Post-translational",
+        19
+      ],
+      [
+        "Pre-translational",
+        1
+      ]
     ],
     "residues": {
       "1": {
@@ -20882,16 +20897,46 @@
       ]
     ],
     "classifications": [
-      "",
-      "Artefact",
-      "Chemical derivative",
-      "Multiple",
-      "N-linked glycosylation",
-      "O-linked glycosylation",
-      "Other glycosylation",
-      "Post-translational",
-      "Pre-translational",
-      "glyco"
+      [
+        "",
+        111
+      ],
+      [
+        "Artefact",
+        513
+      ],
+      [
+        "Chemical derivative",
+        886
+      ],
+      [
+        "Multiple",
+        62
+      ],
+      [
+        "N-linked glycosylation",
+        20
+      ],
+      [
+        "O-linked glycosylation",
+        50
+      ],
+      [
+        "Other glycosylation",
+        18
+      ],
+      [
+        "Post-translational",
+        532
+      ],
+      [
+        "Pre-translational",
+        15
+      ],
+      [
+        "glyco",
+        1
+      ]
     ],
     "residues": {
       "1": {
@@ -47380,11 +47425,26 @@
       ]
     ],
     "classifications": [
-      "",
-      "Artefact",
-      "Chemical derivative",
-      "Multiple",
-      "Post-translational"
+      [
+        "",
+        1
+      ],
+      [
+        "Artefact",
+        21
+      ],
+      [
+        "Chemical derivative",
+        24
+      ],
+      [
+        "Multiple",
+        2
+      ],
+      [
+        "Post-translational",
+        7
+      ]
     ],
     "residues": {
       "1": {
@@ -66093,16 +66153,46 @@
       ]
     ],
     "classifications": [
-      "",
-      "Artefact",
-      "Chemical derivative",
-      "Co-translational",
-      "Multiple",
-      "N-linked glycosylation",
-      "O-linked glycosylation",
-      "Other glycosylation",
-      "Post-translational",
-      "Pre-translational"
+      [
+        "",
+        107
+      ],
+      [
+        "Artefact",
+        469
+      ],
+      [
+        "Chemical derivative",
+        776
+      ],
+      [
+        "Co-translational",
+        1
+      ],
+      [
+        "Multiple",
+        57
+      ],
+      [
+        "N-linked glycosylation",
+        18
+      ],
+      [
+        "O-linked glycosylation",
+        50
+      ],
+      [
+        "Other glycosylation",
+        16
+      ],
+      [
+        "Post-translational",
+        459
+      ],
+      [
+        "Pre-translational",
+        15
+      ]
     ],
     "residues": {
       "1": {
@@ -91530,15 +91620,42 @@
       ]
     ],
     "classifications": [
-      "",
-      "Artefact",
-      "Chemical derivative",
-      "Multiple",
-      "N-linked glycosylation",
-      "O-linked glycosylation",
-      "Other glycosylation",
-      "Post-translational",
-      "Pre-translational"
+      [
+        "",
+        94
+      ],
+      [
+        "Artefact",
+        335
+      ],
+      [
+        "Chemical derivative",
+        414
+      ],
+      [
+        "Multiple",
+        40
+      ],
+      [
+        "N-linked glycosylation",
+        5
+      ],
+      [
+        "O-linked glycosylation",
+        14
+      ],
+      [
+        "Other glycosylation",
+        5
+      ],
+      [
+        "Post-translational",
+        349
+      ],
+      [
+        "Pre-translational",
+        19
+      ]
     ],
     "residues": {
       "1": {
@@ -113704,15 +113821,42 @@
       ]
     ],
     "classifications": [
-      "",
-      "Artefact",
-      "Chemical derivative",
-      "Multiple",
-      "N-linked glycosylation",
-      "O-linked glycosylation",
-      "Other glycosylation",
-      "Post-translational",
-      "Pre-translational"
+      [
+        "",
+        94
+      ],
+      [
+        "Artefact",
+        335
+      ],
+      [
+        "Chemical derivative",
+        414
+      ],
+      [
+        "Multiple",
+        40
+      ],
+      [
+        "N-linked glycosylation",
+        5
+      ],
+      [
+        "O-linked glycosylation",
+        14
+      ],
+      [
+        "Other glycosylation",
+        5
+      ],
+      [
+        "Post-translational",
+        349
+      ],
+      [
+        "Pre-translational",
+        19
+      ]
     ],
     "residues": {
       "1": {
