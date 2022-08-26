@@ -346,7 +346,8 @@ var rcircle_click = function(event) {
     var residue_name = circle_name.split("_")[1]
     info.html("Click residue: " + residue_name);
     focus_key = residue_name;
-    show_focus();
+    //show_focus();
+    draw_protein();
 };
 
 Amino_acids = {
