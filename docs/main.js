@@ -223,7 +223,7 @@ var draw_protein = function() {
         var semi_transparent = "rgba(" + R + "," + G + "," + B + ", 0.5)";
         nd_frame.polygon({
             locations: [r.C.pos, r.N.pos, r.CA.pos],
-            color: color,
+            color: semi_transparent,
             fill: false,
             lineWidth: 4,
         });
@@ -232,7 +232,7 @@ var draw_protein = function() {
                 locations: [r.CA.pos, r.CB.pos],
                 close: false,
                 fill: false,
-                color: color,
+                color: semi_transparent,
                 lineWidth: 4,
             });
         }
@@ -262,7 +262,7 @@ var draw_protein = function() {
                 r: annotation_radius,
                 color:color,
                 fill:false,
-                lineWidth:2,
+                lineWidth:4,
             });
             var rcircle = nd_frame.circle({
                 location:r.C.pos, 
