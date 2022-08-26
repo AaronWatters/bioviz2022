@@ -12,6 +12,21 @@ Bio+MedVis Challenge @ IEEE VIS 2022: Taming protein beasts through visualizatio
 Go to the challenge entry web page interface.
 </a>
 
+# Screen shots
+
+Below the interface displays
+O-linked glycosylation annotations for protein P94312.
+By rotating the figure and hovering over the selected annotations
+we can see that all such annotations are Serine residues on one side
+of the exterior of the protein.
+
+<img src="o_linked.png"/>
+
+Below the interface displays annotations near a residue where mutations
+are known to be associated with disease.
+
+<img src="pathogenic.png"/>
+
 # Credits
 
 The code was implemented by
