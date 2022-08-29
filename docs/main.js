@@ -282,6 +282,8 @@ var draw_protein = function() {
     show_focus();
     nd_frame.fit(0.8)
     nd_frame.orbit_all(current_protein.radius, current_protein.center);
+    var scale = 1.0;
+    nd_frame.set_perspective(current_protein.center, scale * current_protein.radius)
     //debugger;
     if (rotate_checkbox.is(":checked")) {
         nd_frame.rotate_shift(current_protein.center, current_protein.radius, [5,0]);
