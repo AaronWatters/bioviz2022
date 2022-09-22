@@ -1,4 +1,5 @@
-# bioviz2022
+# ANNOTED -- bioviz2022
+
 ANNOTED :: Bioviz 2022 visualization challenge entry.
 
 This repository implements ANNOTED -- an interactive visualization
