@@ -1,7 +1,7 @@
 # bioviz2022
-Bioviz 2022 visualization challenge entry.
+ANNOTED :: Bioviz 2022 visualization challenge entry.
 
-This repository implements an interactive visualization
+This repository implements ANNOTED -- an interactive visualization
 intended to address the requirements of the
 <a href="http://biovis.net/2022/biovisChallenges_vis/">
 Bio+MedVis Challenge @ IEEE VIS 2022: Taming protein beasts through visualization 
